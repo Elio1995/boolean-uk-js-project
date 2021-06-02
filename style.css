@@ -1,141 +1,130 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: sans-serif;
-  }
-
-img {
-    height: 40px;
-    width: 40px;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
 }
 
+.all-file {
+  display: grid;
+  grid-template:
+    "header header header" 60px
+    "left main right" 1fr /
+    200px 1fr 200px;
 
- .all-file {
-     display: grid;
-     grid-template:
-     "header header header" 60px 
-     "left main right" 1fr /
-     200px 1fr 200px;
-
-     /* gap: 10px; */
- }
-
- /* HEADER SECTION  */
-  .header-top {
-    grid-area: header;
-    display: grid;
-    grid-template-columns: 50px 1fr 150px;
-    background-color: #0a0a3f;
-    padding: 20px;
-    color: white;
-  }
-
-  /* LEFT FILTER SECTION  */
-  .left-menu {
-    background-color: aliceblue;
-    grid-area: left;
-    display: grid;
-    grid-template-rows: 65px 80px;
-    padding: 15px;
-  }
-
-  .alcoholic-filter-list {
-      list-style: none;
-      
-  }
-  
-  .category-filter-list {
-    list-style: none;
-  }
-
- /* MAIN SECTION */
-  .main-section {
-    grid-area: main;
-    display: grid;
-    grid-template-rows: 1fr 1fr ;
-    /* NEEDS TO BE CHANGED */
-    padding: 20px;
-  }
-
-  
-
-.main-section .top-section .list-cards{
-    display: grid;
-    grid-template-columns: repeat(4, minmax(200px, auto));
-    list-style: none;
-    gap: 10px;
+  /* gap: 10px; */
 }
 
-.main-section .bottom-section{
-   display: grid;
-   place-content: center;
-  
+/* HEADER SECTION  */
+.header-top {
+  grid-area: header;
+  display: grid;
+  grid-template-columns: 50px 1fr 150px;
+  background-color: #0a0a3f;
+  padding: 20px;
+  color: white;
 }
 
-.main-section .bottom-section .bottom-section-card{
-    border: solid 1px black;
-    padding: 30px;
+/* LEFT FILTER SECTION  */
+.left-menu {
+  background-color: aliceblue;
+  grid-area: left;
+  display: grid;
+  grid-template-rows: 65px 80px;
+  padding: 15px;
+}
+
+.alcoholic-filter-list {
+  list-style: none;
+}
+
+.category-filter-list {
+  list-style: none;
+}
+
+/* MAIN SECTION */
+.main-section {
+  grid-area: main;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  /* NEEDS TO BE CHANGED */
+  padding: 20px;
+}
+
+.main-section .top-section .list-cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(200px, auto));
+  list-style: none;
+  gap: 10px;
+}
+
+.main-section .bottom-section {
+  display: grid;
+  place-content: top;
+}
+
+.main-section .bottom-section .bottom-section-card {
+  border: solid 1px black;
+  padding: 30px;
 }
 
 .card-image {
-    max-width: 100%;
+  max-width: 100%;
+  object-fit: cover;
+  margin-top: 5px;
 }
 .favourite {
-    max-width: 30%;
+  width: 1rem;
+  height: 1rem;
 }
 
-  .card {
-      border: solid 1px black;
-      padding: 5px;
-      border-radius: 5px;
-      
-  }
-
+.card {
+  padding: 8px;
+  border-radius: 8px;
+  text-align: center;
+  background-color: rgb(230, 230, 230);
+}
 
 /* SELECTED CARD AREA  */
-  .main-section .selected-card-image {
-    height: 100px;
-    width: 100px;
+.main-section .selected-card-image {
+  height: 100px;
+  width: 100px;
 }
 
 .main-section .ingredients-list {
-    list-style: circle;
-    list-style: none;
- }
+  list-style: circle;
+  list-style: none;
+}
 
+/* RIGHT MENU */
 
- /* RIGHT MENU */
- 
-  .right-menu {
-    background-color: aliceblue;
-    grid-area: right;
-    display: grid;
-    grid-template-rows: auto 1fr;
-    gap: 25px;
-    padding: 20px;
-  }
+.right-menu {
+  background-color: aliceblue;
+  grid-area: right;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 25px;
+  padding: 20px;
+}
 
 .favourites-list {
-    list-style: none;
+  list-style: none;
 }
 
 .favourites-list li {
-    background-color: rgb(214, 214, 214);
-    border-radius: 40px;
-    padding: 5px 8px;
-    margin-top: 5px;
+  background-color: rgb(214, 214, 214);
+  border-radius: 40px;
+  padding: 5px 8px;
+  margin-top: 5px;
 }
 
-.new-drink-form{
-    
+.new-drink-form {
 }
 
-.new-drink-form input{
-    margin: 10px 0px;
+.new-drink-form input {
+  margin: 10px 0px;
 }
 
 .alcoholic-form {
-    list-style: none;
+  list-style: none;
 }
-
