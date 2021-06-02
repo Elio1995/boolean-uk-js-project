@@ -116,86 +116,118 @@ function renderLeftMenu() {
 
 // MAIN SECTION
 
-function renderTopSection() {
-    const topSection = document.createElement("section")
-    topSection.setAttribute("class", "top-section")
+function renderTopSection(drinks) {
+  const topSection = document.createElement("section")
+  topSection.setAttribute("class", "top-section")
 
-    const listCards = document.createElement("ul")
-    listCards.setAttribute("class", "list-cards")
+  const listCards = document.createElement("ul")
+  listCards.setAttribute("class", "list-cards")
 
-    function renderCard() {
-        const cardEl = document.createElement("li")
-        cardEl.setAttribute("class", "card")
+  topSection.append(listCards)
+  mainSection.append(topSection)
 
-        const cardDivEl = document.createElement("div")
-
-        const h3Name = document.createElement("h3")
-        h3Name.iinnerText = "Sex on the Beach"
-
-        const heartImgEl = document.createElement("img")
-        heartImgEl.setAttribute("class", "favourite")
-        heartImgEl.setAttribute("src", "https://image.flaticon.com/icons/png/512/1077/1077035.png")
-        heartImgEl.setAttribute("alt", "Favourite")
-
-        const drinkImgEl = document.createElement("img")
-        drinkImgEl.setAttribute("class", "card-image")
-        drinkImgEl.setAttribute("src", "https://cdn.diffords.com/contrib/stock-images/2018/05/5af309e6d4c55.jpg")
-        drinkImgEl.setAttribute("alt", "Sex on the Beach")
-
-        cardDivEl.append(h3Name, heartImgEl, drinkImgEl)
-        cardEl.append(cardDivEl)
-        listCards.append(cardEl)
+  function renderCards(drinks) {
+    for (const drink of drinks) {
+      const newDrink = renderCard(drink)
+      console.log(drink)
+      listCards.append(newDrink)
     }
-
-    mainSection.append(topSection)
-
+  }
+  renderCards(drinks)
 }
 
+function renderCard(drink) {
+  const cardEl = document.createElement("li")
+  cardEl.setAttribute("class", "card")
+
+  const cardDivEl = document.createElement("div")
+
+  const h3Name = document.createElement("h3")
+  h3Name.innerText = drink.name
+  console.log(drink.name)
+
+  const heartImgEl = document.createElement("img")
+  heartImgEl.setAttribute("class", "favourite")
+  heartImgEl.setAttribute(
+    "src",
+    "https://image.flaticon.com/icons/png/512/1077/1077035.png"
+  )
+  heartImgEl.setAttribute("alt", "Favourite")
+
+  const drinkImgEl = document.createElement("img")
+  drinkImgEl.setAttribute("class", "card-image")
+  drinkImgEl.setAttribute(
+    "src",
+    "https://cdn.diffords.com/contrib/stock-images/2018/05/5af309e6d4c55.jpg"
+  )
+  drinkImgEl.setAttribute("alt", drink.name)
+
+  cardDivEl.append(h3Name, heartImgEl, drinkImgEl)
+  cardEl.append(cardDivEl)
+  console.log(cardEl)
+  return cardEl
+}
 
 function renderBottomSection() {
-    const bottomSection = document.createElement("section")
-    bottomSection.setAttribute("class", "bottom-section")
+  const bottomSection = document.createElement("section")
+  bottomSection.setAttribute("class", "bottom-section")
 
-    const selectedCardDivEl = document.createElement("div")
-    selectedCardDivEl.setAttribute("class", "bottom-section-card")
+  const selectedCardDivEl = document.createElement("div")
+  selectedCardDivEl.setAttribute("class", "bottom-section-card")
 
-    const h3Name = document.createElement("h3")
-    h3Name.innerText = "Sex on the Beach"
+  const h3Name = document.createElement("h3")
+  h3Name.iinnerText = "Sex on the Beach"
 
-    const heartImgEl = document.createElement("img")
-    heartImgEl.setAttribute("src", "https://image.flaticon.com/icons/png/512/1077/1077035.png")
-    heartImgEl.setAttribute("class", "favourite")
-    heartImgEl.setAttribute("alt", "Favourite")
+  const heartImgEl = document.createElement("img")
+  heartImgEl.setAttribute(
+    "src",
+    "https://image.flaticon.com/icons/png/512/1077/1077035.png"
+  )
+  heartImgEl.setAttribute("class", "favourite")
+  heartImgEl.setAttribute("alt", "Favourite")
 
-    const drinkImgEl = document.createElement("img")
-    drinkImgEl.setAttribute("class", "card-image")
-    drinkImgEl.setAttribute("src", "https://cdn.diffords.com/contrib/stock-images/2018/05/5af309e6d4c55.jpg")
-    drinkImgEl.setAttribute("alt", "Sex on the Beach")
+  const drinkImgEl = document.createElement("img")
+  drinkImgEl.setAttribute("class", "card-image")
+  drinkImgEl.setAttribute(
+    "src",
+    "https://cdn.diffords.com/contrib/stock-images/2018/05/5af309e6d4c55.jpg"
+  )
+  drinkImgEl.setAttribute("alt", "Sex on the Beach")
 
-    const h3IngredientsTitle = document.createElement("h3")
-    h3IngredientsTitle.innerText = "Ingredients:"
+  const h3IngredientsTitle = document.createElement("h3")
+  h3IngredientsTitle.innerText = "Ingredients:"
 
-    const ingredientsList = document.createElement("ul")
-    ingredientsList.setAttribute("class", "ingredients-list")
+  const ingredientsList = document.createElement("ul")
+  ingredientsList.setAttribute("class", "ingredients-list")
 
-    const ingredientsListItem = document.createElement("li")
-    ingredientsListItem.innerText = "Lemons"
+  const ingredientsListItem = document.createElement("li")
+  ingredientsListItem.innerText = "Lemons"
 
-    ingredientsList.append(ingredientsListItem)
+  ingredientsList.append(ingredientsListItem)
 
-    const h3InstructionsTitle = document.createElement("h3")
-    h3InstructionsTitle.innerText = "Instructions:"
+  const h3InstructionsTitle = document.createElement("h3")
+  h3InstructionsTitle.innerText = "Instructions:"
 
-    const instructionsText = document.createElement("p")
-    instructionsText.innerText = "Here go the instructions Here go the instructions Here go the instructions..."
+  const instructionsText = document.createElement("p")
+  instructionsText.innerText =
+    "Here go the instructions Here go the instructions Here go the instructions..."
 
-    const commentsSection = document.createElement("div")
-    commentsSection.innerText = "Comments and ratings to come"
+  const commentsSection = document.createElement("div")
+  commentsSection.innerText = "Comments and ratings to come"
 
-    selectedCardDivEl.append(h3Name, heartImgEl, drinkImgEl, h3IngredientsTitle, ingredientsList, h3InstructionsTitle, instructionsText, commentsSection)
-    bottomSection.append(selectedCardDivEl)
+  selectedCardDivEl.append(
+    h3Name,
+    heartImgEl,
+    drinkImgEl,
+    h3IngredientsTitle,
+    ingredientsList,
+    h3InstructionsTitle,
+    instructionsText,
+    commentsSection
+  )
+  bottomSection.append(selectedCardDivEl)
 
-    mainSection.append(bottomSection)
+  mainSection.append(bottomSection)
 }
 
 
