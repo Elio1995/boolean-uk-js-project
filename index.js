@@ -1,188 +1,222 @@
 const allFile = document.querySelector(`.all-file`)
 
-
 const state = {
-    drinks: []
+  drinks: [
+    {
+      id: "17222",
+      name: "A1",
+      ingredients: ["Gin", "Grand Marnier", "Lemon Juice", "Grenadine"],
+      category: "Cocktail",
+      instructions:
+        "Pour all ingredients into a cocktail shaker, mix and serve over ice into a chilled glass.",
+      image:
+        "https://www.thecocktaildb.com/images/media/drink/2x8thr1504816928.jpg",
+      alcoholic: true,
+    },
+  ],
 }
 
-
-
-
-// HEADER SECTION 
+// HEADER SECTION
 
 function renderHeaderSection() {
+  const headerEl = document.querySelector(`.header-top`)
 
-    const headerEl = document.querySelector(`.header-top`)
+  const iconHeaderEl = document.createElement("img")
+  iconHeaderEl.setAttribute("class", "logo")
 
-    const iconHeaderEl = document.createElement("img")
-    iconHeaderEl.setAttribute("class", "logo")
+  const searchHeaderEl = document.createElement("input")
+  searchHeaderEl.setAttribute("class", "search-header")
+  searchHeaderEl.setAttribute("type", "search")
+  searchHeaderEl.setAttribute("placeholerd", "Search")
 
-
-    const searchHeaderEl = document.createElement("input")
-    searchHeaderEl.setAttribute("class", "search-header")
-    searchHeaderEl.setAttribute("type", "search")
-    searchHeaderEl.setAttribute("placeholerd", "Search")
-
-    headerEl.append(iconHeaderEl, searchHeaderEl)
-
+  headerEl.append(iconHeaderEl, searchHeaderEl)
 }
-
 
 // LEFT MENU
 
 function renderLeftMenu() {
+  const leftMenuEl = document.querySelector(`.left-menu`)
 
-    const leftMenuEl = document.querySelector(`.left-menu`)
+  const h2LeftMenu = document.createElement("h2")
 
-    const h2LeftMenu = document.createElement("h2")
+  function alcoholicList() {
+    // ALCOHOLIC LIST
+    const ulAlcoholicLeftEl = document.createElement("ul")
+    ulAlcoholicLeftEl.setAttribute("class", "alcoholic-filter-list")
 
+    const alcoholicLabel = document.createElement("label")
+    alcoholicLabel.setAttribute("for", "alcoholic")
 
-    function alcoholicList() {
-        // ALCOHOLIC LIST
-        const ulAlcoholicLeftEl = document.createElement("ul")
-        ulAlcoholicLeftEl.setAttribute("class", "alcoholic-filter-list")
+    const alcoholicLiLeftEl1 = document.createElement("li")
+    alcoholicLiLeftEl1.innerText = "All"
+    const alcoholicInputLeftEl1 = document.createElement("input")
+    alcoholicInputLeftEl1.setAttribute("name", "alcoholic")
+    alcoholicInputLeftEl1.setAttribute("type", "checkbox")
+    alcoholicLiLeftEl1.append(alcoholicInputLeftEl1)
 
+    const alcoholicLiLeftEl2 = document.createElement("li")
+    alcoholicLiLeftEl2.innerText = "Alcoholic"
+    const alcoholicInputLeftEl2 = document.createElement("input")
+    alcoholicInputLeftEl2.setAttribute("name", "alcoholic")
+    alcoholicInputLeftEl2.setAttribute("type", "checkbox")
+    alcoholicLiLeftEl2.append(alcoholicInputLeftEl2)
 
-        const alcoholicLabel = document.createElement("label")
-        alcoholicLabel.setAttribute("for", "alcoholic")
+    const alcoholicLiLeftEl3 = document.createElement("li")
+    alcoholicLiLeftEl3.innerText = "Non-Alcoholic"
+    const alcoholicInputLeftEl3 = document.createElement("input")
+    alcoholicInputLeftEl3.setAttribute("name", "alcoholic")
+    alcoholicInputLeftEl3.setAttribute("type", "checkbox")
+    alcoholicLiLeftEl3.append(alcoholicInputLeftEl3)
 
-        const alcoholicLiLeftEl1 = document.createElement("li")
-        alcoholicLiLeftEl1.innerText = "All"
-        const alcoholicInputLeftEl1 = document.createElement("input")
-        alcoholicInputLeftEl1.setAttribute("name", "alcoholic")
-        alcoholicInputLeftEl1.setAttribute("type", "checkbox")
-        alcoholicLiLeftEl1.append(alcoholicInputLeftEl1)
+    ulAlcoholicLeftEl.append(
+      alcoholicLabel,
+      alcoholicInputLeftEl1,
+      alcoholicInputLeftEl2,
+      alcoholicInputLeftEl3
+    )
+  }
 
-        const alcoholicLiLeftEl2 = document.createElement("li")
-        alcoholicLiLeftEl2.innerText = "Alcoholic"
-        const alcoholicInputLeftEl2 = document.createElement("input")
-        alcoholicInputLeftEl2.setAttribute("name", "alcoholic")
-        alcoholicInputLeftEl2.setAttribute("type", "checkbox")
-        alcoholicLiLeftEl2.append(alcoholicInputLeftEl2)
+  function categoryList() {
+    // CATEGORY LIST
+    const ulCategoryLeftEl = document.createElement("ul")
+    ulCategoryLeftEl.setAttribute("class", "category-filter-list")
 
-        const alcoholicLiLeftEl3 = document.createElement("li")
-        alcoholicLiLeftEl3.innerText = "Non-Alcoholic"
-        const alcoholicInputLeftEl3 = document.createElement("input")
-        alcoholicInputLeftEl3.setAttribute("name", "alcoholic")
-        alcoholicInputLeftEl3.setAttribute("type", "checkbox")
-        alcoholicLiLeftEl3.append(alcoholicInputLeftEl3)
+    const categoryLabel = document.createElement("label")
+    categoryLabel.setAttribute("for", "category")
 
+    const categoryLiLeftEl = document.createElement("li")
+    categoryLiLeftEl.innerText = "Ordinary Drink"
+    const categoryInputLeftEl = document.createElement("input")
+    categoryInputLeftEl.setAttribute("name", "category")
+    categoryInputLeftEl.setAttribute("type", "checkbox")
+    categoryLiLeftEl.append(categoryInputLeftEl)
+  }
 
-        ulAlcoholicLeftEl.append(alcoholicLabel, alcoholicInputLeftEl1, alcoholicInputLeftEl2, alcoholicInputLeftEl3)
-    }
-
-    function categoryList() {
-
-        // CATEGORY LIST
-        const ulCategoryLeftEl = document.createElement("ul")
-        ulCategoryLeftEl.setAttribute("class", "category-filter-list")
-
-        const categoryLabel = document.createElement("label")
-        categoryLabel.setAttribute("for", "category")
-
-        const categoryLiLeftEl = document.createElement("li")
-        categoryLiLeftEl.innerText = "Ordinary Drink"
-        const categoryInputLeftEl = document.createElement("input")
-        categoryInputLeftEl.setAttribute("name", "category")
-        categoryInputLeftEl.setAttribute("type", "checkbox")
-        categoryLiLeftEl.append(categoryInputLeftEl)
-    }
-
-
-    leftMenuEl.append(h2LeftMenu, alcoholicList, categoryList)
+  // leftMenuEl.append(h2LeftMenu, alcoholicList, categoryList)
 }
-
 
 // MAIN SECTION
 
 const mainSection = document.querySelector(`.main-section`)
 
-function renderTopSection() {
-    const topSection = document.createElement("section")
-    topSection.setAttribute("class", "top-section")
+function renderTopSection(drinks) {
+  const topSection = document.createElement("section")
+  topSection.setAttribute("class", "top-section")
 
-    const listCards = document.createElement("ul")
-    listCards.setAttribute("class", "list-cards")
+  const listCards = document.createElement("ul")
+  listCards.setAttribute("class", "list-cards")
 
-    function renderCard() {
-        const cardEl = document.createElement("li")
-        cardEl.setAttribute("class", "card")
+  topSection.append(listCards)
+  mainSection.append(topSection)
 
-        const cardDivEl = document.createElement("div")
-
-        const h3Name = document.createElement("h3")
-        h3Name.iinnerText = "Sex on the Beach"
-
-        const heartImgEl = document.createElement("img")
-        heartImgEl.setAttribute("class", "favourite")
-        heartImgEl.setAttribute("src", "https://image.flaticon.com/icons/png/512/1077/1077035.png")
-        heartImgEl.setAttribute("alt", "Favourite")
-
-        const drinkImgEl = document.createElement("img")
-        drinkImgEl.setAttribute("class", "card-image")
-        drinkImgEl.setAttribute("src", "https://cdn.diffords.com/contrib/stock-images/2018/05/5af309e6d4c55.jpg")
-        drinkImgEl.setAttribute("alt", "Sex on the Beach")
-
-        cardDivEl.append(h3Name, heartImgEl, drinkImgEl)
-        cardEl.append(cardDivEl)
-        listCards.append(cardEl)
+  function renderCards(drinks) {
+    for (const drink of drinks) {
+      const newDrink = renderCard(drink)
+      console.log(drink)
+      listCards.append(newDrink)
     }
-
-    mainSection.append(topSection)
-
+  }
+  renderCards(drinks)
 }
 
+function renderCard(drink) {
+  const cardEl = document.createElement("li")
+  cardEl.setAttribute("class", "card")
+
+  const cardDivEl = document.createElement("div")
+
+  const h3Name = document.createElement("h3")
+  h3Name.innerText = drink.name
+  console.log(drink.name)
+
+  const heartImgEl = document.createElement("img")
+  heartImgEl.setAttribute("class", "favourite")
+  heartImgEl.setAttribute(
+    "src",
+    "https://image.flaticon.com/icons/png/512/1077/1077035.png"
+  )
+  heartImgEl.setAttribute("alt", "Favourite")
+
+  const drinkImgEl = document.createElement("img")
+  drinkImgEl.setAttribute("class", "card-image")
+  drinkImgEl.setAttribute(
+    "src",
+    "https://cdn.diffords.com/contrib/stock-images/2018/05/5af309e6d4c55.jpg"
+  )
+  drinkImgEl.setAttribute("alt", drink.name)
+
+  cardDivEl.append(h3Name, heartImgEl, drinkImgEl)
+  cardEl.append(cardDivEl)
+  console.log(cardEl)
+  return cardEl
+}
 
 function renderBottomSection() {
-    const bottomSection = document.createElement("section")
-    bottomSection.setAttribute("class", "bottom-section")
+  const bottomSection = document.createElement("section")
+  bottomSection.setAttribute("class", "bottom-section")
 
-    const selectedCardDivEl = document.createElement("div")
-    selectedCardDivEl.setAttribute("class", "bottom-section-card")
+  const selectedCardDivEl = document.createElement("div")
+  selectedCardDivEl.setAttribute("class", "bottom-section-card")
 
-    const h3Name = document.createElement("h3")
-    h3Name.iinnerText = "Sex on the Beach"
+  const h3Name = document.createElement("h3")
+  h3Name.iinnerText = "Sex on the Beach"
 
-    const heartImgEl = document.createElement("img")
-    heartImgEl.setAttribute("src", "https://image.flaticon.com/icons/png/512/1077/1077035.png")
-    heartImgEl.setAttribute("class", "favourite")
-    heartImgEl.setAttribute("alt", "Favourite")
+  const heartImgEl = document.createElement("img")
+  heartImgEl.setAttribute(
+    "src",
+    "https://image.flaticon.com/icons/png/512/1077/1077035.png"
+  )
+  heartImgEl.setAttribute("class", "favourite")
+  heartImgEl.setAttribute("alt", "Favourite")
 
-    const drinkImgEl = document.createElement("img")
-    drinkImgEl.setAttribute("class", "card-image")
-    drinkImgEl.setAttribute("src", "https://cdn.diffords.com/contrib/stock-images/2018/05/5af309e6d4c55.jpg")
-    drinkImgEl.setAttribute("alt", "Sex on the Beach")
+  const drinkImgEl = document.createElement("img")
+  drinkImgEl.setAttribute("class", "card-image")
+  drinkImgEl.setAttribute(
+    "src",
+    "https://cdn.diffords.com/contrib/stock-images/2018/05/5af309e6d4c55.jpg"
+  )
+  drinkImgEl.setAttribute("alt", "Sex on the Beach")
 
-    const h3IngredientsTitle = document.createElement("h3")
-    h3IngredientsTitle.innerText = "Ingredients:"
+  const h3IngredientsTitle = document.createElement("h3")
+  h3IngredientsTitle.innerText = "Ingredients:"
 
-    const ingredientsList = document.createElement("ul")
-    ingredientsList.setAttribute("class", "ingredients-list")
+  const ingredientsList = document.createElement("ul")
+  ingredientsList.setAttribute("class", "ingredients-list")
 
-    const ingredientsListItem = document.createElement("li")
-    ingredientsListItem.innerText = "Lemons"
+  const ingredientsListItem = document.createElement("li")
+  ingredientsListItem.innerText = "Lemons"
 
-    ingredientsList.append(ingredientsListItem)
+  ingredientsList.append(ingredientsListItem)
 
-    const h3InstructionsTitle = document.createElement("h3")
-    h3InstructionsTitle.innerText = "Instructions:"
+  const h3InstructionsTitle = document.createElement("h3")
+  h3InstructionsTitle.innerText = "Instructions:"
 
-    const instructionsText = document.createElement("p")
-    instructionsText.innerText = "Here go the instructions Here go the instructions Here go the instructions..."
+  const instructionsText = document.createElement("p")
+  instructionsText.innerText =
+    "Here go the instructions Here go the instructions Here go the instructions..."
 
-    const commentsSection = document.createElement("div")
-    commentsSection.innerText = "Comments and ratings to come"
+  const commentsSection = document.createElement("div")
+  commentsSection.innerText = "Comments and ratings to come"
 
-    selectedCardDivEl.append(h3Name, heartImgEl, drinkImgEl, h3IngredientsTitle, ingredientsList, h3InstructionsTitle, instructionsText, commentsSection)
-    bottomSection.append(selectedCardDivEl)
+  selectedCardDivEl.append(
+    h3Name,
+    heartImgEl,
+    drinkImgEl,
+    h3IngredientsTitle,
+    ingredientsList,
+    h3InstructionsTitle,
+    instructionsText,
+    commentsSection
+  )
+  bottomSection.append(selectedCardDivEl)
 
-    mainSection.append(bottomSection)
+  mainSection.append(bottomSection)
 }
-
 
 // RIGHT MENU
 
-{/* <div class="favourites-section">
+{
+  /* <div class="favourites-section">
 <h2>Favourites</h2>
 <ul class="favourites-list">
   <li>
@@ -228,33 +262,25 @@ function renderBottomSection() {
   Submit
 </button>
 
-</div>  */}
-
-
-
-
-
-
-
-
-function getDataFromSever() {
-    fetch("http://localhost:3000/drinks")
-        .then((response) => response.json())
-        .then((drinksdata) => {
-            state.drinks = drinksdata;
-            render();
-        });
-});
+</div>  */
 }
 
+// function getDataFromSever() {
+//   fetch("http://localhost:3000/drinks")
+//     .then(response => response.json())
+//     .then(drinksdata => {
+//       state.drinks = drinksdata
+//       renderCards(drinksdata)
+//     })
+// }
 
-
+renderTopSection(state.drinks)
 
 function render() {
-    renderHeaderSection()
-    renderLeftMenu()
-    renderTopSection()
-    renderBottomSection()
+  renderHeaderSection()
+  renderLeftMenu()
+  renderTopSection()
+  renderBottomSection()
 }
-
-getDataFromSever()
+render()
+// getDataFromSever()
