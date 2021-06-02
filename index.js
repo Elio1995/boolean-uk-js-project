@@ -6,7 +6,11 @@ const rightMenuEl = document.querySelector(`.right-menu`)
 
 const state = {
   drinks: [],
-  favourites: []
+  favourites: [],
+  // filters: {
+  //   alcoholic: "",
+  //   categories: []
+  // }
 }
 
 
@@ -81,6 +85,11 @@ function renderAlcoholicList() {
   const ulAlcoholicLeftEl = document.createElement("ul")
   ulAlcoholicLeftEl.setAttribute("class", "alcoholic-filter-list")
 
+  // const alcoholicFormEl = document.createAttribute("form")
+  // // alcoholicFormEl.setAttribute("class", "alcoholic-form")
+
+  // const alcoholicLabelEl = document.createAttribute("label")
+
 
   const alcoholicLiLeftEl1 = document.createElement("li")
   const alcoholicLabel1 = document.createElement("label")
@@ -88,6 +97,8 @@ function renderAlcoholicList() {
   const alcoholicInputLeftEl1 = document.createElement("input")
   alcoholicInputLeftEl1.setAttribute("name", "alcoholic")
   alcoholicInputLeftEl1.setAttribute("type", "radio")
+  alcoholicInputLeftEl1.setAttribute("value", "All")
+
   alcoholicLabel1.append(alcoholicInputLeftEl1)
   alcoholicLiLeftEl1.append(alcoholicLabel1)
 
@@ -97,6 +108,8 @@ function renderAlcoholicList() {
   const alcoholicInputLeftEl2 = document.createElement("input")
   alcoholicInputLeftEl2.setAttribute("name", "alcoholic")
   alcoholicInputLeftEl2.setAttribute("type", "radio")
+  alcoholicInputLeftEl2.setAttribute("value", "Alcoholic")
+
   alcoholicLabel2.append(alcoholicInputLeftEl2)
   alcoholicLiLeftEl2.append(alcoholicLabel2)
 
@@ -106,10 +119,19 @@ function renderAlcoholicList() {
   const alcoholicInputLeftEl3 = document.createElement("input")
   alcoholicInputLeftEl3.setAttribute("name", "alcoholic")
   alcoholicInputLeftEl3.setAttribute("type", "radio")
+  alcoholicInputLeftEl3.setAttribute("value", "Non-Alcoholic")
   alcoholicLabel3.append(alcoholicInputLeftEl3)
   alcoholicLiLeftEl3.append(alcoholicLabel3)
 
+  // alcoholicLabelEl.addEventListener("change", function () {
+  //   state.drinks.alcoholic = ulAlcoholicLeftEl.value;
+  //   renderTopSection();
+  //   return alcoholicLabelEl
+  // });
 
+  // alcoholicLabelEl.append(alcoholicLiLeftEl1, alcoholicLiLeftEl2, alcoholicLiLeftEl3)
+  // alcoholicFormEl.append(alcoholicLableEl)
+  // ulAlcoholicLeftEl.appendChild(alcoholicFormEl)
   ulAlcoholicLeftEl.append(alcoholicLiLeftEl1, alcoholicLiLeftEl2, alcoholicLiLeftEl3)
 
   return ulAlcoholicLeftEl
@@ -133,15 +155,28 @@ function renderCategoriesListItem(category) {
 
   return categoryLiLeftEl
 }
+
+
 function renderCategoriesList(categories) {
   const ulCategoryLeftEl = document.createElement("ul")
   ulCategoryLeftEl.setAttribute("class", "category-filter-list")
+
+  const categoryFormEl = document.createElement("form")
+  categoryFormEl.setAttribute("class", "checkbox-form")
+
+  const categoryFormLabel = document.createElement("label")
+  categoryFormEl.append(categoryFormLabel)
+
+
   for (const category of categories) {
     const liEl = renderCategoriesListItem(category)
 
-    ulCategoryLeftEl.append(liEl)
+    // ulCategoryLeftEl.append(liEl)
+    categoryFormLabel.append(liEl)
+    categoryFormEl.append(categoryFormLabel)
   }
-  return ulCategoryLeftEl
+  // return ulCategoryLeftEl
+  return categoryFormEl
 }
 
 
@@ -335,7 +370,12 @@ function favouriteListItem(favourite) {
   const deleteButton = document.createElement("button")
   deleteButton.innerText = "X"
   deleteButton.addEventListener("click", function () {
-    console.log(`Deleted ${favourite}`)
+    console.log(`Deleted ${favourite} !!`)
+    state.favourites = state.favourites.filter(function (targetFavourite) {
+      return targetFavourite !== favourite
+    })
+    rightMenuEl.innerHTML = ""
+    renderRightMenu()
   })
 
   favouritesLiEl.append(favouritesh3El, deleteButton)
