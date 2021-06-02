@@ -1,11 +1,28 @@
 const allFile = document.querySelector(`.all-file`)
+const headerEl = document.querySelector(`.header-top`)
 const leftMenuEl = document.querySelector(`.left-menu`)
 const mainSection = document.querySelector(`.main-section`)
 const rightMenuEl = document.querySelector(".right-menu")
 
+// const state = {
+//     drinks: [],
+//     categories: []
+// }
+
 const state = {
-    drinks: [],
-    categories: []
+    drinks: [
+        {
+            id: "17222",
+            name: "A1",
+            ingredients: ["Gin", "Grand Marnier", "Lemon Juice", "Grenadine"],
+            category: "Cocktail",
+            instructions:
+                "Pour all ingredients into a cocktail shaker, mix and serve over ice into a chilled glass.",
+            image:
+                "https://www.thecocktaildb.com/images/media/drink/2x8thr1504816928.jpg",
+            alcoholic: true,
+        },
+    ],
 }
 
 
@@ -13,7 +30,6 @@ const state = {
 
 // HEADER SECTION 
 
-const headerEl = document.querySelector(`.header-top`)
 
 function renderHeaderSection() {
 
@@ -74,6 +90,8 @@ function renderLeftMenu() {
         ulAlcoholicLeftEl.append(alcoholicLabel, alcoholicInputLeftEl1, alcoholicInputLeftEl2, alcoholicInputLeftEl3)
     }
 
+    alcoholicList()
+
     function categoryList() {
 
         // CATEGORY LIST
@@ -90,7 +108,7 @@ function renderLeftMenu() {
         categoryInputLeftEl.setAttribute("type", "checkbox")
         categoryLiLeftEl.append(categoryInputLeftEl)
     }
-
+    categoryList()
 
     leftMenuEl.append(h2LeftMenu, alcoholicList, categoryList)
 }
@@ -142,7 +160,7 @@ function renderBottomSection() {
     selectedCardDivEl.setAttribute("class", "bottom-section-card")
 
     const h3Name = document.createElement("h3")
-    h3Name.iinnerText = "Sex on the Beach"
+    h3Name.innerText = "Sex on the Beach"
 
     const heartImgEl = document.createElement("img")
     heartImgEl.setAttribute("src", "https://image.flaticon.com/icons/png/512/1077/1077035.png")
@@ -301,6 +319,8 @@ function renderRightMenu() {
     }
 
     rightMenuEl.append(favouritesDivEl, newDrinkDivEl)
+    favouritesList()
+    newDrinkForm()
 }
 
 // CREATE ANOTHER JSON SERVER WITH THE CATEGORIES
