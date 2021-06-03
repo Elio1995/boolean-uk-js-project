@@ -7,13 +7,11 @@ const rightMenuEl = document.querySelector(`.right-menu`)
 const state = {
   drinks: [],
   favourites: [],
-  // filters: {
-  //   alcoholic: "",
-  //   categories: []
-  // }
+  filters: {
+    alcoholic: "All",
+    categories: [],
+  },
 }
-
-
 
 // const state = {
 //   drinks: [
@@ -32,7 +30,6 @@ const state = {
 //   favourites: ["A1", "Margarita", "Mojito"]
 // }
 
-
 function getCategories() {
   const uniqueCategories = []
 
@@ -47,15 +44,11 @@ function getCategories() {
   return uniqueCategories
 }
 
-
-
-// HEADER SECTION 
+// HEADER SECTION
 
 function renderHeaderSection() {
-
   const iconHeaderEl = document.createElement("img")
   iconHeaderEl.setAttribute("class", "logo")
-
 
   const searchHeaderEl = document.createElement("input")
   searchHeaderEl.setAttribute("class", "search-header")
@@ -63,7 +56,6 @@ function renderHeaderSection() {
   searchHeaderEl.setAttribute("placeholerd", "Search")
 
   headerEl.append(iconHeaderEl, searchHeaderEl)
-
 }
 
 // LEFT MENU
@@ -77,7 +69,6 @@ function renderLeftMenu() {
   const categories = getCategories()
   const ulCategoryLeftEl = renderCategoriesList(categories)
   leftMenuEl.append(h2LeftMenu, ulAlcoholicLeftEl, ulCategoryLeftEl)
-
 }
 
 // ALCOHOLIC LIST
@@ -85,63 +76,121 @@ function renderAlcoholicList() {
   const ulAlcoholicLeftEl = document.createElement("ul")
   ulAlcoholicLeftEl.setAttribute("class", "alcoholic-filter-list")
 
-  // const alcoholicFormEl = document.createAttribute("form")
-  // // alcoholicFormEl.setAttribute("class", "alcoholic-form")
+  const alcoholicFormEl = document.createElement("form")
+  alcoholicFormEl.setAttribute("class", "alcoholic-form")
+  alcoholicFormEl.setAttribute("name", "alcoholic")
 
-  // const alcoholicLabelEl = document.createAttribute("label")
+  const alcoholicLabelEl = document.createElement("label")
 
+  const alcoholicAllLi = document.createElement("li")
+  const alcoholicAllLabel = document.createElement("label")
+  alcoholicAllLabel.innerHTML = "All"
+  const alcoholicAllInput = document.createElement("input")
+  alcoholicAllInput.setAttribute("name", "alcoholic")
+  alcoholicAllInput.setAttribute("type", "radio")
+  alcoholicAllInput.setAttribute("value", "All")
 
-  const alcoholicLiLeftEl1 = document.createElement("li")
-  const alcoholicLabel1 = document.createElement("label")
-  alcoholicLabel1.innerHTML = "All"
-  const alcoholicInputLeftEl1 = document.createElement("input")
-  alcoholicInputLeftEl1.setAttribute("name", "alcoholic")
-  alcoholicInputLeftEl1.setAttribute("type", "radio")
-  alcoholicInputLeftEl1.setAttribute("value", "All")
+  alcoholicAllLabel.append(alcoholicAllInput)
+  alcoholicAllLi.append(alcoholicAllLabel)
 
-  alcoholicLabel1.append(alcoholicInputLeftEl1)
-  alcoholicLiLeftEl1.append(alcoholicLabel1)
+  const alcoholicAlcoholicLi = document.createElement("li")
+  const alcoholicAlcoholicLabel = document.createElement("label")
+  alcoholicAlcoholicLabel.innerHTML = "Alcoholic"
+  const alcoholicAlcoholicInput = document.createElement("input")
+  alcoholicAlcoholicInput.setAttribute("name", "alcoholic")
+  alcoholicAlcoholicInput.setAttribute("type", "radio")
+  alcoholicAlcoholicInput.setAttribute("value", "Alcoholic")
 
-  const alcoholicLiLeftEl2 = document.createElement("li")
-  const alcoholicLabel2 = document.createElement("label")
-  alcoholicLabel2.innerHTML = "Alcoholic"
-  const alcoholicInputLeftEl2 = document.createElement("input")
-  alcoholicInputLeftEl2.setAttribute("name", "alcoholic")
-  alcoholicInputLeftEl2.setAttribute("type", "radio")
-  alcoholicInputLeftEl2.setAttribute("value", "Alcoholic")
+  alcoholicAlcoholicLabel.append(alcoholicAlcoholicInput)
+  alcoholicAlcoholicLi.append(alcoholicAlcoholicLabel)
 
-  alcoholicLabel2.append(alcoholicInputLeftEl2)
-  alcoholicLiLeftEl2.append(alcoholicLabel2)
+  const alcoholicNonLi = document.createElement("li")
+  const alcoholicNonLabel = document.createElement("label")
+  alcoholicNonLabel.innerHTML = "Non-Alcoholic"
+  const alcoholicNonInput = document.createElement("input")
+  alcoholicNonInput.setAttribute("name", "alcoholic")
+  alcoholicNonInput.setAttribute("type", "radio")
+  alcoholicNonInput.setAttribute("value", "Non-Alcoholic")
+  alcoholicNonLabel.append(alcoholicNonInput)
+  alcoholicNonLi.append(alcoholicNonLabel)
 
-  const alcoholicLiLeftEl3 = document.createElement("li")
-  const alcoholicLabel3 = document.createElement("label")
-  alcoholicLabel3.innerHTML = "Non-Alcoholic"
-  const alcoholicInputLeftEl3 = document.createElement("input")
-  alcoholicInputLeftEl3.setAttribute("name", "alcoholic")
-  alcoholicInputLeftEl3.setAttribute("type", "radio")
-  alcoholicInputLeftEl3.setAttribute("value", "Non-Alcoholic")
-  alcoholicLabel3.append(alcoholicInputLeftEl3)
-  alcoholicLiLeftEl3.append(alcoholicLabel3)
+  alcoholicLabelEl.append(alcoholicAllLi, alcoholicAlcoholicLi, alcoholicNonLi)
+  alcoholicFormEl.append(alcoholicLabelEl)
+  ulAlcoholicLeftEl.appendChild(alcoholicFormEl)
 
-  // alcoholicLabelEl.addEventListener("change", function () {
-  //   state.drinks.alcoholic = ulAlcoholicLeftEl.value;
-  //   renderTopSection();
-  //   return alcoholicLabelEl
-  // });
+  alcoholicAllInput.addEventListener("click", function () {
+    state.filters.alcoholic = alcoholicAllInput.value
+    renderTopSection()
+  })
 
-  // alcoholicLabelEl.append(alcoholicLiLeftEl1, alcoholicLiLeftEl2, alcoholicLiLeftEl3)
-  // alcoholicFormEl.append(alcoholicLableEl)
-  // ulAlcoholicLeftEl.appendChild(alcoholicFormEl)
-  ulAlcoholicLeftEl.append(alcoholicLiLeftEl1, alcoholicLiLeftEl2, alcoholicLiLeftEl3)
+  alcoholicAlcoholicInput.addEventListener("click", function () {
+    state.filters.alcoholic = alcoholicAlcoholicInput.value
+    renderTopSection()
+  })
+
+  alcoholicNonInput.addEventListener("click", function () {
+    state.filters.alcoholic = alcoholicNonInput.value
+    renderTopSection()
+  })
 
   return ulAlcoholicLeftEl
 }
 
+function getFilteredDrinks() {
+  const listEl = document.querySelector(`.list-cards`)
+  let drinks = state.drinks
+  switch (state.filters.alcoholic) {
+    case "All":
+      break
+    case "Alcoholic":
+      drinks = state.drinks.filter(function (drink) {
+        return drink.alcoholic === true
+      })
+      break
+    case "Non-Alcoholic":
+      drinks = state.drinks.filter(function (drink) {
+        return drink.alcoholic === false
+      })
+      break
+  }
+  //  WE'RE STUCK HERE <<<<<<<<<<<
+  if (state.filters.categories.length > 0) {
+    drinks = drinks.filter(function (drink) {
+      console.log("hello")
+      return state.filters.categories.includes(drink.category)
+    })
+
+    for (const drink of drinks) {
+      console.log("hello2")
+      const cardEl = renderCard(drink)
+      listEl.append(cardEl)
+    }
+
+    for (const category of state.filters.categories) {
+      if (category === state.drinks.category) {
+        return
+      }
+    }
+
+    // if (state.filters.cities.length > 0) {
+    //   // code here depends on filter cities
+    //   breweriesToRender = breweriesToRender.filter(function (brewery) {
+    //     return state.filters.cities.includes(brewery.city);
+    //   });
+    // }
+
+    // for (const brewery of breweriesToRender) {
+    //   const liEl = renderSingleBreweryListItem(brewery);
+    //   breweryListEl.append(liEl);
+    // }
+
+    // mainEl.append(divEl);
+  }
+  return drinks
+}
 
 // CATEGORY LIST
 function renderCategoriesListItem(category) {
-
-
   const categoryLiLeftEl = document.createElement("li")
   const categoryLabel = document.createElement("label")
   categoryLabel.innerText = category
@@ -150,12 +199,19 @@ function renderCategoriesListItem(category) {
   categoryInputLeftEl.setAttribute("name", "category")
   categoryInputLeftEl.setAttribute("type", "checkbox")
 
+  categoryInputLeftEl.addEventListener("click", function () {
+    console.log(`I am ${category}`)
+
+    if (categoryInputLeftEl.checked) {
+      state.filters.categories = [...state.filters.categories, category]
+    }
+  })
+
   categoryLabel.append(categoryInputLeftEl)
   categoryLiLeftEl.append(categoryLabel)
 
   return categoryLiLeftEl
 }
-
 
 function renderCategoriesList(categories) {
   const ulCategoryLeftEl = document.createElement("ul")
@@ -166,7 +222,6 @@ function renderCategoriesList(categories) {
 
   const categoryFormLabel = document.createElement("label")
   categoryFormEl.append(categoryFormLabel)
-
 
   for (const category of categories) {
     const liEl = renderCategoriesListItem(category)
@@ -179,14 +234,14 @@ function renderCategoriesList(categories) {
   return categoryFormEl
 }
 
-
 // MAIN SECTION
 
 function renderTopSection() {
   const topSection = document.createElement("section")
   topSection.setAttribute("class", "top-section")
 
-  const listCards = renderCards(state.drinks)
+  const filteredDrinks = getFilteredDrinks()
+  const listCards = renderCards(filteredDrinks)
 
   topSection.append(listCards)
   mainSection.prepend(topSection)
@@ -232,16 +287,12 @@ function renderCard(drink) {
 
   const drinkImgEl = document.createElement("img")
   drinkImgEl.setAttribute("class", "card-image")
-  drinkImgEl.setAttribute(
-    "src",
-    drink.image
-  )
+  drinkImgEl.setAttribute("src", drink.image)
   drinkImgEl.setAttribute("alt", drink.name)
 
   drinkImgEl.addEventListener("click", function () {
     mainSection.innerHTML = ""
     renderBottomSection(drink)
-
   })
 
   cardDivEl.append(h3Name, heartImgEl, drinkImgEl)
@@ -250,7 +301,6 @@ function renderCard(drink) {
 }
 
 function renderBottomSection(drink) {
-
   const bottomSection = document.createElement("section")
   bottomSection.setAttribute("class", "bottom-section")
 
@@ -277,10 +327,7 @@ function renderBottomSection(drink) {
 
   const drinkImgEl = document.createElement("img")
   drinkImgEl.setAttribute("class", "card-image")
-  drinkImgEl.setAttribute(
-    "src",
-    drink.image
-  )
+  drinkImgEl.setAttribute("src", drink.image)
   drinkImgEl.setAttribute("alt", drink.name)
 
   const h3IngredientsTitle = document.createElement("h3")
@@ -298,8 +345,7 @@ function renderBottomSection(drink) {
   h3InstructionsTitle.innerText = "Instructions:"
 
   const instructionsText = document.createElement("p")
-  instructionsText.innerText =
-    drink.instructions
+  instructionsText.innerText = drink.instructions
 
   const commentsSection = document.createElement("div")
   commentsSection.innerText = "Comments and ratings to come"
@@ -323,13 +369,10 @@ function renderBottomSection(drink) {
   return bottomSection
 }
 
-
 // RIGHT MENU
-
 
 // FAVOURITE SECTION
 function renderRightMenu() {
-
   // FAVOURITE LIST
   const favouritesDivEl = document.createElement("div")
   favouritesDivEl.setAttribute("class", "favourites-section")
@@ -346,12 +389,9 @@ function renderRightMenu() {
 
   // APPEND ITEMS
   rightMenuEl.append(favouritesDivEl, newDrinkDivEl)
-
-
 }
 
 function favouritesList() {
-
   const favouritesUlEl = document.createElement("ul")
   favouritesUlEl.setAttribute("class", "favourites-list")
   for (const favourite of state.favourites) {
@@ -382,9 +422,7 @@ function favouriteListItem(favourite) {
   return favouritesLiEl
 }
 
-
 function newDrinkForm() {
-
   const newDrinkDivEl = document.createElement("div")
   newDrinkDivEl.setAttribute("class", "new-drink-form")
 
@@ -451,8 +489,11 @@ function newDrinkForm() {
   newDrinkAlcoholicFormLabelEl3.append(newDrinkAlcoholicFormInputEl3)
   newDrinkAlcoholicFormLiEl3.append(newDrinkAlcoholicFormLabelEl3)
 
-  newDrinkAlcoholicFormUlEl.append(newDrinkAlcoholicFormLiEl1, newDrinkAlcoholicFormLiEl2, newDrinkAlcoholicFormLiEl3)
-
+  newDrinkAlcoholicFormUlEl.append(
+    newDrinkAlcoholicFormLiEl1,
+    newDrinkAlcoholicFormLiEl2,
+    newDrinkAlcoholicFormLiEl3
+  )
 
   // INGREDIENTS
   const newDrinksIngredientsLabelEl = document.createElement("label")
@@ -478,37 +519,39 @@ function newDrinkForm() {
   // SUBMIT BUTTON
 
   const newDrinkSubmitButtonEl = document.createElement("button")
-  newDrinkSubmitButtonEl.setAttribute("type", "submit");
+  newDrinkSubmitButtonEl.setAttribute("type", "submit")
   newDrinkSubmitButtonEl.innerText = "SUBMIT"
 
-  newDrinkDivEl.append(newDrinkh2EL, newDrinkNameLabelEl, newDrinkCategoriesLabelEl, newDrinkAlcoholicFormUlEl, newDrinksIngredientsLabelEl, newDrinksInstructionsLabelEl, newDrinkSubmitButtonEl)
-
+  newDrinkDivEl.append(
+    newDrinkh2EL,
+    newDrinkNameLabelEl,
+    newDrinkCategoriesLabelEl,
+    newDrinkAlcoholicFormUlEl,
+    newDrinksIngredientsLabelEl,
+    newDrinksInstructionsLabelEl,
+    newDrinkSubmitButtonEl
+  )
 
   return newDrinkDivEl
 }
-
 
 // CREATE ANOTHER JSON SERVER WITH THE CATEGORIES
 
 function getDataFromSever() {
   fetch("http://localhost:3000/drinks")
-    .then((response) => response.json())
-    .then((drinksdata) => {
-      state.drinks = drinksdata;
+    .then(response => response.json())
+    .then(drinksdata => {
+      state.drinks = drinksdata
       renderLeftMenu()
       renderTopSection()
       console.log(state.drinks)
     })
-
 }
-
-
 
 function render() {
   renderHeaderSection()
   renderRightMenu()
 }
-
 
 getDataFromSever()
 render()
