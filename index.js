@@ -388,12 +388,17 @@ function newDrinkForm() {
   const newDrinkDivEl = document.createElement("div")
   newDrinkDivEl.setAttribute("class", "new-drink-form")
 
+  const newDrinkFormEl = document.createElement("form")
+  newDrinkFormEl.setAttribute("class", "new-drink-form")
+  newDrinkFormEl.setAttribute("autocomplete", "off")
+
   const newDrinkh2EL = document.createElement("h2")
   newDrinkh2EL.innerText = "Create Your Own Drink"
 
   // NAME
   const newDrinkNameLabelEl = document.createElement("label")
   newDrinkNameLabelEl.innerText = "Name"
+  newDrinkNameLabelEl.setAttribute("for", "name")
 
   const newDrinkNameInputEl = document.createElement("input")
   newDrinkNameInputEl.setAttribute("type", "text")
@@ -403,6 +408,7 @@ function newDrinkForm() {
   // CATEGORY
   const newDrinkCategoriesLabelEl = document.createElement("label")
   newDrinkCategoriesLabelEl.innerText = "Category"
+  newDrinkCategoriesLabelEl.setAttribute("for", "categories")
 
   const newDrinkCategoriesSelectEl = document.createElement("select")
   newDrinkCategoriesSelectEl.setAttribute("type", "select")
@@ -445,15 +451,13 @@ function newDrinkForm() {
   newDrinkAlcoholicFormLabelEl3.append(newDrinkAlcoholicFormInputEl3)
   newDrinkAlcoholicFormLiEl3.append(newDrinkAlcoholicFormLabelEl3)
 
-
-
-
   newDrinkAlcoholicFormUlEl.append(newDrinkAlcoholicFormLiEl1, newDrinkAlcoholicFormLiEl2, newDrinkAlcoholicFormLiEl3)
 
 
   // INGREDIENTS
   const newDrinksIngredientsLabelEl = document.createElement("label")
   newDrinksIngredientsLabelEl.innerText = "Ingredients"
+  newDrinksIngredientsLabelEl.setAttribute("for", "ingredients")
 
   const newDrinksIngredientsInputEl = document.createElement("input")
   newDrinksIngredientsInputEl.setAttribute("type", "text")
@@ -463,6 +467,7 @@ function newDrinkForm() {
   // INSTRUCTIONS
   const newDrinksInstructionsLabelEl = document.createElement("label")
   newDrinksInstructionsLabelEl.innerText = "Instructions"
+  newDrinksInstructionsLabelEl.setAttribute("for", "instructions")
 
   const newDrinksInstructionsTextAreaEl = document.createElement("textarea")
   newDrinksInstructionsTextAreaEl.setAttribute("name", "instructions")
@@ -473,6 +478,7 @@ function newDrinkForm() {
   // SUBMIT BUTTON
 
   const newDrinkSubmitButtonEl = document.createElement("button")
+  newDrinkSubmitButtonEl.setAttribute("type", "submit");
   newDrinkSubmitButtonEl.innerText = "SUBMIT"
 
   newDrinkDivEl.append(newDrinkh2EL, newDrinkNameLabelEl, newDrinkCategoriesLabelEl, newDrinkAlcoholicFormUlEl, newDrinksIngredientsLabelEl, newDrinksInstructionsLabelEl, newDrinkSubmitButtonEl)
