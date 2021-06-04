@@ -47,15 +47,23 @@ function getCategories() {
 // HEADER SECTION
 
 function renderHeaderSection() {
+  //ADDED LOGO AND DIV
   const iconHeaderEl = document.createElement("img")
   iconHeaderEl.setAttribute("class", "logo")
+  iconHeaderEl.setAttribute(
+    "src",
+    "https://png.pngtree.com/png-vector/20190515/ourmid/pngtree-cocktail-icon-design-png-image_1019544.jpg"
+  )
+
+  const h1El = document.createElement("h1")
+  h1El.innerText = "MIXOLOGY AT HOME"
 
   const searchHeaderEl = document.createElement("input")
   searchHeaderEl.setAttribute("class", "search-header")
   searchHeaderEl.setAttribute("type", "search")
   searchHeaderEl.setAttribute("placeholerd", "Search")
 
-  headerEl.append(iconHeaderEl, searchHeaderEl)
+  headerEl.append(iconHeaderEl, h1El, searchHeaderEl)
 }
 
 // LEFT MENU
@@ -156,35 +164,8 @@ function getFilteredDrinks() {
   //  WE'RE STUCK HERE <<<<<<<<<<<
   if (state.filters.categories.length > 0) {
     drinks = drinks.filter(function (drink) {
-      console.log("hello")
       return state.filters.categories.includes(drink.category)
     })
-
-    for (const drink of drinks) {
-      console.log("hello2")
-      const cardEl = renderCard(drink)
-      listEl.append(cardEl)
-    }
-
-    for (const category of state.filters.categories) {
-      if (category === state.drinks.category) {
-        return
-      }
-    }
-
-    // if (state.filters.cities.length > 0) {
-    //   // code here depends on filter cities
-    //   breweriesToRender = breweriesToRender.filter(function (brewery) {
-    //     return state.filters.cities.includes(brewery.city);
-    //   });
-    // }
-
-    // for (const brewery of breweriesToRender) {
-    //   const liEl = renderSingleBreweryListItem(brewery);
-    //   breweryListEl.append(liEl);
-    // }
-
-    // mainEl.append(divEl);
   }
   return drinks
 }
@@ -204,7 +185,14 @@ function renderCategoriesListItem(category) {
 
     if (categoryInputLeftEl.checked) {
       state.filters.categories = [...state.filters.categories, category]
+    } else {
+      state.filters.categories = state.filters.categories.filter(function (
+        targetCategory
+      ) {
+        return targetCategory !== category
+      })
     }
+    renderTopSection()
   })
 
   categoryLabel.append(categoryInputLeftEl)
@@ -220,15 +208,11 @@ function renderCategoriesList(categories) {
   const categoryFormEl = document.createElement("form")
   categoryFormEl.setAttribute("class", "checkbox-form")
 
-  const categoryFormLabel = document.createElement("label")
-  categoryFormEl.append(categoryFormLabel)
-
   for (const category of categories) {
     const liEl = renderCategoriesListItem(category)
 
     // ulCategoryLeftEl.append(liEl)
-    categoryFormLabel.append(liEl)
-    categoryFormEl.append(categoryFormLabel)
+    categoryFormEl.append(liEl)
   }
   // return ulCategoryLeftEl
   return categoryFormEl
@@ -240,8 +224,7 @@ function renderTopSection() {
   const topSection = document.createElement("section")
   topSection.setAttribute("class", "top-section")
 
-  const filteredDrinks = getFilteredDrinks()
-  const listCards = renderCards(filteredDrinks)
+  const listCards = renderCards(getFilteredDrinks())
 
   topSection.append(listCards)
   mainSection.prepend(topSection)
@@ -271,10 +254,7 @@ function renderCard(drink) {
 
   const heartImgEl = document.createElement("img")
   heartImgEl.setAttribute("class", "favourite")
-  heartImgEl.setAttribute(
-    "src",
-    "https://image.flaticon.com/icons/png/512/1077/1077035.png"
-  )
+  heartImgEl.setAttribute("src", "/images/white-heart.svg")
   heartImgEl.setAttribute("alt", "Favourite")
 
   heartImgEl.addEventListener("click", function () {

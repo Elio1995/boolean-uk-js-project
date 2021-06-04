@@ -3,9 +3,70 @@
   padding: 0;
   box-sizing: border-box;
   font-family: sans-serif;
+  color: var(--white);
+  line-height: 1.7rem;
+  
+}
+
+html {
+--blackest: #0f161d;
+--black: #141d26;
+--navy: #243447;
+--pink: #c51f5d;
+--dark-pink: #8d1642;
+--white: white;
+/* var(--black, value) */
+}
+
+h2 {
+  color: var(--pink);
+  font-size: 1.2rem;
+}
+
+h3 {
+  color: var(--dark-pink);
+  font-size: 1rem;
+}
+
+p {
+  margin-top: 8px;
+  font-size: 0.7rem;
+}
+
+li {
+  list-style: none;
+}
+
+label {
+  color: var(--dark-pinkpink);
+  font-size: 0.8rem;
+}
+
+input, textarea {
+  background-color: #243447;
+}
+
+input:active, textarea:active {
+  border-color: white;
+}
+
+button {
+  border-radius: 20px;
+  background-color: var(--dark-pink);
+  color: var(--white);
+  padding: 3px 7px;
+}
+
+button:hover{
+  background-color: var(--pink);
+}
+
+button:active{
+  background-color: var(--dark-pink);
 }
 
 .all-file {
+  background-color: var(--black);
   display: grid;
   grid-template:
     "header header header" 60px
@@ -19,19 +80,26 @@
 .header-top {
   grid-area: header;
   display: grid;
-  grid-template-columns: 50px 1fr 150px;
-  background-color: #0a0a3f;
+  gap: 10px;
+  grid-template-columns: 30px 1fr 150px;
+  background-color: var(--blackest);
   padding: 20px;
   color: white;
 }
 
+.logo {
+  width: 30px;
+  height: 30px;
+}
+
 /* LEFT FILTER SECTION  */
 .left-menu {
-  background-color: aliceblue;
+  background-color: var(--black);
   grid-area: left;
   display: grid;
   grid-template-rows: 65px 80px;
   padding: 15px;
+  gap: 25px;
 }
 
 .alcoholic-filter-list {
@@ -42,13 +110,22 @@
   list-style: none;
 }
 
+.left-menu input{
+  margin-left: 10px;
+}
+
 /* MAIN SECTION */
 .main-section {
+  height: 100%;
+  width: 100%;
+  background-color: var(--navy)
   grid-area: main;
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-  /* NEEDS TO BE CHANGED */
   padding: 20px;
+}
+
+.top-section{
+  height: 100vh;
+  overflow: scroll;
 }
 
 .main-section .top-section .list-cards {
@@ -64,8 +141,9 @@
 }
 
 .main-section .bottom-section .bottom-section-card {
-  border: solid 1px black;
+  border: solid 1px var(--dark-pink);
   padding: 30px;
+  border-radius: 8px;
 }
 
 .card-image {
@@ -82,7 +160,11 @@
   padding: 8px;
   border-radius: 8px;
   text-align: center;
-  background-color: rgb(230, 230, 230);
+  background-color: var(--black)  
+}
+
+.list-cards .card:hover{
+  border-color: var(--pink);
 }
 
 /* SELECTED CARD AREA  */
@@ -99,7 +181,7 @@
 /* RIGHT MENU */
 
 .right-menu {
-  background-color: aliceblue;
+  background-color: var(--black)
   grid-area: right;
   display: grid;
   grid-template-rows: auto 1fr;
@@ -113,12 +195,21 @@
 
 .favourites-list li {
   background-color: rgb(214, 214, 214);
-  border-radius: 40px;
+  border-radius: 20px;
   padding: 5px 8px;
   margin-top: 5px;
+  display: grid;
+  grid-template-columns: 1fr 50px;
 }
 
-.new-drink-form {
+.favourites-list button {
+  display: inline;
+}
+
+
+
+.new-drink-form select {
+  display: block;
 }
 
 .new-drink-form input {
@@ -127,4 +218,8 @@
 
 .alcoholic-form {
   list-style: none;
+}
+
+.alcoholic-form input{
+  margin-left: 10px;
 }
