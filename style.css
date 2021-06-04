@@ -3,6 +3,65 @@
   padding: 0;
   box-sizing: border-box;
   font-family: sans-serif;
+  color: var(--white);
+  line-height: 1.7rem;
+}
+
+html {
+--blackest: #0f161d;
+--black: #141d26;
+--navy: #243447;
+--pink: #c51f5d;
+--dark-pink: #8d1642;
+--white: white;
+/* var(--black, value) */
+}
+
+h2 {
+  color: var(--pink);
+  font-size: 1.2rem;
+}
+
+h3 {
+  color: var(--dark-pink);
+  font-size: 1rem;
+}
+
+p {
+  margin-top: 8px;
+  font-size: 0.7rem;
+}
+
+li {
+  list-style: none;
+}
+
+label {
+  color: var(--dark-pinkpink);
+  font-size: 0.8rem;
+}
+
+input, textarea {
+  background-color: #243447;
+}
+
+input:active, textarea:active {
+  border-color: white;
+}
+
+button {
+  border-radius: 20px;
+  background-color: var(--dark-pink);
+  color: var(--white);
+  padding: 5px 9px;
+}
+
+button:hover{
+  background-color: var(--pink);
+}
+
+button:active{
+  background-color: var(--dark-pink);
 }
 
 .all-file {
@@ -20,14 +79,14 @@
   grid-area: header;
   display: grid;
   grid-template-columns: 50px 1fr 150px;
-  background-color: #0a0a3f;
+  background-color: var(--blackest);
   padding: 20px;
   color: white;
 }
 
 /* LEFT FILTER SECTION  */
 .left-menu {
-  background-color: aliceblue;
+  background-color: var(--black);
   grid-area: left;
   display: grid;
   grid-template-rows: 65px 80px;
@@ -44,6 +103,7 @@
 
 /* MAIN SECTION */
 .main-section {
+  background-color: var(--navy)
   grid-area: main;
   display: grid;
   grid-template-rows: 1fr 1fr;
@@ -64,8 +124,9 @@
 }
 
 .main-section .bottom-section .bottom-section-card {
-  border: solid 1px black;
+  border: solid 1px var(--dark-pink);
   padding: 30px;
+  border-radius: 8px;
 }
 
 .card-image {
@@ -82,7 +143,11 @@
   padding: 8px;
   border-radius: 8px;
   text-align: center;
-  background-color: rgb(230, 230, 230);
+  background-color: var(--black)  
+}
+
+.card:hover{
+  border-color: var(--pink);
 }
 
 /* SELECTED CARD AREA  */
@@ -99,7 +164,7 @@
 /* RIGHT MENU */
 
 .right-menu {
-  background-color: aliceblue;
+  background-color: var(--black)
   grid-area: right;
   display: grid;
   grid-template-rows: auto 1fr;
