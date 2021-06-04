@@ -27,6 +27,8 @@ const state = {
 //       image:
 //         "https://www.thecocktaildb.com/images/media/drink/2x8thr1504816928.jpg",
 //       alcoholic: true,
+//  likes: 0,
+//  comments: ""
 //     },
 //   ],
 //   favourites: ["A1", "Margarita", "Mojito"]
@@ -49,7 +51,9 @@ function getCategories() {
 
 
 
-// HEADER SECTION 
+// HEADER SECTION ----------------
+
+// HEADER NEEDS TO BE FINISHED
 
 function renderHeaderSection() {
 
@@ -66,7 +70,7 @@ function renderHeaderSection() {
 
 }
 
-// LEFT MENU
+// LEFT MENU ---------------
 
 function renderLeftMenu() {
   const h2LeftMenu = document.createElement("h2")
@@ -180,7 +184,7 @@ function renderCategoriesList(categories) {
 }
 
 
-// MAIN SECTION
+// MAIN SECTION ---------------
 
 function renderTopSection() {
   const topSection = document.createElement("section")
@@ -292,13 +296,43 @@ function renderBottomSection(drink) {
   const h3Name = document.createElement("h3")
   h3Name.innerText = drink.name
 
-  const heartImgEl = document.createElement("img")
-  heartImgEl.setAttribute(
-    "src",
-    "https://image.flaticon.com/icons/png/512/1077/1077035.png"
-  )
-  heartImgEl.setAttribute("class", "favourite")
-  heartImgEl.setAttribute("alt", "Favourite")
+
+  // LIKE SECTION
+  const likesSectionEl = document.createElement("div");
+  likesSectionEl.setAttribute("class", "likes-section");
+
+  const likesEl = document.createElement("span");
+  likesEl.setAttribute("class", "likes");
+  likesEl.innerText = `${drink.likes} likes`;
+
+  const heartBtnEl = document.createElement("button")
+  heartBtnEl.innerText = "♥"
+  heartBtnEl.setAttribute("class", "favourite")
+  // heartImgEl.setAttribute("alt", "Favourite")
+
+  heartBtnEl.addEventListener("click", function () {
+    // increase likes on object by 1
+    drink.likes += 1;
+
+    fetch(`http://localhost:3000/drinks/${drink.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ likes: drink.likes })
+    })
+      // Promise<Response>
+      .then(function (response) {
+        return response.json();
+      }) // Promise<updatedImage>
+      .then(function (updatedLikes) {
+        // update the page
+        likesEl.innerText = `${updatedLikes.likes} likes`;
+      });
+  });
+
+
+  likesSectionEl.append(heartBtnEl, likesEl)
 
   const deleteButtonBottomEl = document.createElement("button")
   deleteButtonBottomEl.innerText = "X"
@@ -338,7 +372,7 @@ function renderBottomSection(drink) {
 
   selectedCardDivEl.append(
     h3Name,
-    heartImgEl,
+    likesSectionEl,
     deleteButtonBottomEl,
     drinkImgEl,
     h3IngredientsTitle,
@@ -356,7 +390,7 @@ function renderBottomSection(drink) {
 }
 
 
-// RIGHT MENU
+// RIGHT MENU ----------------
 
 
 // FAVOURITE SECTION
@@ -635,7 +669,6 @@ function newDrinkForm() {
 
 }
 
-// CREATE ANOTHER JSON SERVER WITH THE CATEGORIES
 
 function getDataFromSever() {
   fetch("http://localhost:3000/drinks")
