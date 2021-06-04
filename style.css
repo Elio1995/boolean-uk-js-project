@@ -53,7 +53,8 @@ button {
   border-radius: 20px;
   background-color: var(--dark-pink);
   color: var(--white);
-  padding: 5px 9px;
+  padding: 3px 7px;
+
 }
 
 button:hover{
@@ -65,6 +66,7 @@ button:active{
 }
 
 .all-file {
+  background-color: var(--black);
   display: grid;
   grid-template:
     "header header header" 60px
@@ -78,10 +80,17 @@ button:active{
 .header-top {
   grid-area: header;
   display: grid;
-  grid-template-columns: 50px 1fr 150px;
+  gap: 10px;
+  grid-template-columns: 30px 1fr 150px;
+
   background-color: var(--blackest);
   padding: 20px;
   color: white;
+}
+
+.logo {
+  width: 30px;
+  height: 30px;
 }
 
 /* LEFT FILTER SECTION  */
@@ -91,6 +100,7 @@ button:active{
   display: grid;
   grid-template-rows: 65px 80px;
   padding: 15px;
+  gap: 25px;
 }
 
 .alcoholic-filter-list {
@@ -101,14 +111,22 @@ button:active{
   list-style: none;
 }
 
+.left-menu input{
+  margin-left: 10px;
+}
+
 /* MAIN SECTION */
 .main-section {
+  height: 100%;
+  width: 100%;
   background-color: var(--navy)
   grid-area: main;
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-  /* NEEDS TO BE CHANGED */
   padding: 20px;
+}
+
+.top-section{
+  height: 100vh;
+  overflow: scroll;
 }
 
 .main-section .top-section .list-cards {
@@ -146,7 +164,8 @@ button:active{
   background-color: var(--black)  
 }
 
-.card:hover{
+.list-cards .card:hover{
+
   border-color: var(--pink);
 }
 
@@ -178,12 +197,21 @@ button:active{
 
 .favourites-list li {
   background-color: rgb(214, 214, 214);
-  border-radius: 40px;
+  border-radius: 20px;
   padding: 5px 8px;
   margin-top: 5px;
+  display: grid;
+  grid-template-columns: 1fr 50px;
 }
 
-.new-drink-form {
+.favourites-list button {
+  display: inline;
+}
+
+
+
+.new-drink-form select {
+  display: block;
 }
 
 .new-drink-form input {
@@ -193,3 +221,8 @@ button:active{
 .alcoholic-form {
   list-style: none;
 }
+
+.alcoholic-form input{
+  margin-left: 10px;
+}
+
