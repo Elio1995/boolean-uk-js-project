@@ -265,6 +265,7 @@ background-color: var(--black);
 
 .new-drink-form select {
   display: block;
+  background-color: var(--navy); 
 }
 
 .new-drink-form input {
