@@ -10,6 +10,7 @@ const state = {
   filters: {
     alcoholic: "All",
     categories: [],
+    search: "",
   },
 }
 
@@ -63,7 +64,12 @@ function renderHeaderSection() {
   const searchHeaderEl = document.createElement("input")
   searchHeaderEl.setAttribute("class", "search-header")
   searchHeaderEl.setAttribute("type", "search")
-  searchHeaderEl.setAttribute("placeholerd", "Search")
+  searchHeaderEl.setAttribute("placeholder", "Search")
+
+  searchHeaderEl.addEventListener("change", function () {
+    state.filters.search = searchHeaderEl.value
+    renderTopSection()
+  })
 
   headerEl.append(iconHeaderEl, h1El, searchHeaderEl)
 }
@@ -163,12 +169,16 @@ function getFilteredDrinks() {
       })
       break
   }
-  //  WE'RE STUCK HERE <<<<<<<<<<<
   if (state.filters.categories.length > 0) {
     drinks = drinks.filter(function (drink) {
       return state.filters.categories.includes(drink.category)
     })
   }
+
+  drinks = drinks.filter(function (drink) {
+    return drink.name.toLowerCase().includes(state.filters.search.toLowerCase())
+  })
+
   return drinks
 }
 
@@ -256,9 +266,8 @@ function renderCard(drink) {
 
   const heartImgEl = document.createElement("img")
   heartImgEl.setAttribute("class", "favourite")
-  heartImgEl.setAttribute("src", "/images/white-heart.svg")
+  heartImgEl.setAttribute("src", "./images/white-heart.svg")
   heartImgEl.setAttribute("alt", "Favourite")
-
 
   heartImgEl.addEventListener("click", function () {
     if (state.favourites.includes(drink.name)) return
@@ -271,7 +280,6 @@ function renderCard(drink) {
   const deleteButtonTopEl = document.createElement("button")
   deleteButtonTopEl.innerText = "X"
   deleteButtonTopEl.addEventListener("click", function () {
-
     deleteDrinkOnServer(drink).then(function () {
       state.drinks = state.drinks.filter(function (deleteDrinkFromServer) {
         return deleteDrinkFromServer !== drink
@@ -279,10 +287,7 @@ function renderCard(drink) {
       mainSection.innerHTML = ""
       renderTopSection()
     })
-
   })
-
-
 
   function deleteDrinkOnServer(drink) {
     // Method: Delete
@@ -291,13 +296,9 @@ function renderCard(drink) {
     return fetch(`http://localhost:3000/drinks/${drink.id}`, {
       method: "DELETE",
     }).then(function (response) {
-      return response.json();
-    });
+      return response.json()
+    })
   }
-
-
-
-
 
   const drinkImgEl = document.createElement("img")
   drinkImgEl.setAttribute("class", "card-image")
@@ -322,16 +323,16 @@ function renderBottomSection(drink) {
   selectedCardDivEl.setAttribute("class", "bottom-section-card")
 
   const h3Name = document.createElement("h3")
+  h3Name.setAttribute("class", "selected-drink-name")
   h3Name.innerText = drink.name
 
-
   // LIKE SECTION
-  const likesSectionEl = document.createElement("div");
-  likesSectionEl.setAttribute("class", "likes-section");
+  const likesSectionEl = document.createElement("div")
+  likesSectionEl.setAttribute("class", "likes-section")
 
-  const likesEl = document.createElement("span");
-  likesEl.setAttribute("class", "likes");
-  likesEl.innerText = `${drink.likes} likes`;
+  const likesEl = document.createElement("span")
+  likesEl.setAttribute("class", "likes")
+  likesEl.innerText = `${drink.likes} likes`
 
   const heartBtnEl = document.createElement("button")
   heartBtnEl.innerText = "♥"
@@ -340,29 +341,29 @@ function renderBottomSection(drink) {
 
   heartBtnEl.addEventListener("click", function () {
     // increase likes on object by 1
-    drink.likes += 1;
+    drink.likes += 1
 
     fetch(`http://localhost:3000/drinks/${drink.id}`, {
       method: "PATCH",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ likes: drink.likes })
+      body: JSON.stringify({ likes: drink.likes }),
     })
       // Promise<Response>
       .then(function (response) {
-        return response.json();
+        return response.json()
       }) // Promise<updatedImage>
       .then(function (updatedLikes) {
         // update the page
-        likesEl.innerText = `${updatedLikes.likes} likes`;
-      });
-  });
-
+        likesEl.innerText = `${updatedLikes.likes} likes`
+      })
+  })
 
   likesSectionEl.append(heartBtnEl, likesEl)
 
   const deleteButtonBottomEl = document.createElement("button")
+  deleteButtonBottomEl.setAttribute("class", "selected-card-delete")
   deleteButtonBottomEl.innerText = "X"
   deleteButtonBottomEl.addEventListener("click", function () {
     mainSection.innerHTML = ""
@@ -391,19 +392,15 @@ function renderBottomSection(drink) {
   const instructionsText = document.createElement("p")
   instructionsText.innerText = drink.instructions
 
-  const commentsSection = document.createElement("div")
-  commentsSection.innerText = "Comments and ratings to come"
-
   selectedCardDivEl.append(
+    deleteButtonBottomEl,
     h3Name,
     likesSectionEl,
-    deleteButtonBottomEl,
     drinkImgEl,
     h3IngredientsTitle,
     ingredientsList,
     h3InstructionsTitle,
-    instructionsText,
-    commentsSection
+    instructionsText
   )
 
   bottomSection.append(selectedCardDivEl)
@@ -488,15 +485,15 @@ function newDrinkForm() {
   newDrinkNameLabelEl.append(newDrinkNameInputEl)
 
   // IMAGE
-  const newDrinkImageLabelEl = document.createElement("label");
-  newDrinkImageLabelEl.setAttribute("for", "image");
-  newDrinkImageLabelEl.innerText = "Image";
+  const newDrinkImageLabelEl = document.createElement("label")
+  newDrinkImageLabelEl.setAttribute("for", "image")
+  newDrinkImageLabelEl.innerText = "Image"
 
-  const newDrinkImageInputEl = document.createElement("input");
-  newDrinkImageInputEl.setAttribute("id", "image");
-  newDrinkImageInputEl.setAttribute("name", "image");
-  newDrinkImageInputEl.setAttribute("type", "url");
-  newDrinkImageInputEl.setAttribute("required", "true");
+  const newDrinkImageInputEl = document.createElement("input")
+  newDrinkImageInputEl.setAttribute("id", "image")
+  newDrinkImageInputEl.setAttribute("name", "image")
+  newDrinkImageInputEl.setAttribute("type", "url")
+  newDrinkImageInputEl.setAttribute("required", "true")
   newDrinkImageLabelEl.append(newDrinkImageInputEl)
 
   // CATEGORY
@@ -504,9 +501,6 @@ function newDrinkForm() {
   const newDrinkCategoriesLabelEl = document.createElement("label")
   newDrinkCategoriesLabelEl.innerText = "Category"
   newDrinkCategoriesLabelEl.setAttribute("for", "categories")
-
-
-
 
   function newDrinkOption(category) {
     const newDrinkCategoriesOptionEl = document.createElement("option")
@@ -528,15 +522,15 @@ function newDrinkForm() {
     // newDrinkOptionDisableEl.setAttribute("disabled", false)
     newDrinkOptionDisableEl.innerText = "Select the Category"
 
-    {/* <option value disabled selected hidden>Select the Category</option> */ }
-
+    {
+      /* <option value disabled selected hidden>Select the Category</option> */
+    }
 
     for (const category of categories) {
       const optionEl = newDrinkOption(category)
 
       // ulCategoryLeftEl.append(liEl)
       newDrinkCategoriesSelectEl.append(newDrinkOptionDisableEl, optionEl)
-
     }
     newDrinkCategoriesLabelEl.append(newDrinkCategoriesSelectEl)
   }
@@ -546,15 +540,6 @@ function newDrinkForm() {
   // ALCOHOLIC
   const newDrinkAlcoholicFormUlEl = document.createElement("ul")
   newDrinkAlcoholicFormUlEl.setAttribute("class", "alcoholic-form")
-
-  // const newDrinkAlcoholicFormLiEl1 = document.createElement("li")
-  // const newDrinkAlcoholicFormLabelEl1 = document.createElement("label")
-  // newDrinkAlcoholicFormLabelEl1.innerText = "All"
-  // const newDrinkAlcoholicFormInputEl1 = document.createElement("input")
-  // newDrinkAlcoholicFormInputEl1.setAttribute("name", "alcoholic")
-  // newDrinkAlcoholicFormInputEl1.setAttribute("type", "radio")
-  // newDrinkAlcoholicFormLabelEl1.append(newDrinkAlcoholicFormInputEl1)
-  // newDrinkAlcoholicFormLiEl1.append(newDrinkAlcoholicFormLabelEl1)
 
   const newDrinkAlcoholicFormLiEl2 = document.createElement("li")
   const newDrinkAlcoholicFormLabelEl2 = document.createElement("label")
@@ -577,7 +562,6 @@ function newDrinkForm() {
   newDrinkAlcoholicFormLiEl3.append(newDrinkAlcoholicFormLabelEl3)
 
   newDrinkAlcoholicFormUlEl.append(
-    newDrinkAlcoholicFormLiEl1,
     newDrinkAlcoholicFormLiEl2,
     newDrinkAlcoholicFormLiEl3
   )
@@ -609,9 +593,10 @@ function newDrinkForm() {
   newDrinkSubmitButtonEl.setAttribute("type", "submit")
   newDrinkSubmitButtonEl.innerText = "SUBMIT"
 
-  newDrinkDivEl.append(
+  newDrinkFormEl.append(
     newDrinkh2EL,
     newDrinkNameLabelEl,
+    newDrinkImageLabelEl,
     newDrinkCategoriesLabelEl,
     newDrinkAlcoholicFormUlEl,
     newDrinksIngredientsLabelEl,
@@ -621,43 +606,19 @@ function newDrinkForm() {
 
   //we kept these next three lines??
   newDrinkFormEl.addEventListener("submit", function (event) {
-    event.preventDefault();
+    event.preventDefault()
 
     const drink = createDrinkObject(newDrinkFormEl)
-
 
     // PROBLEMS WITH THE NEW DRINK FORM
 
     createDrinkOnServer(drink).then(function (newDrinkFromServer) {
-      // newPostFromServer.comments = [];
-      const cardEl = renderCard(newDrinkFromServer);
-      // const topSection = document.querySelector(".top-section");
-      const listCards = document.querySelector(".list-cards");
-      listCards.prepend(cardEl);
-      newDrinkFormEl.reset();
+      const cardEl = renderCard(newDrinkFromServer)
+      const listCards = document.querySelector(".list-cards")
+      listCards.prepend(cardEl)
+      newDrinkFormEl.reset()
     })
   })
-
-
-
-  // const state = {
-  //   drinks: [
-  //     {
-  //       id: "17222",
-  //       name: "A1",
-  //       ingredients: ["Gin", "Grand Marnier", "Lemon Juice", "Grenadine"],
-  //       category: "Cocktail",
-  //       instructions:
-  //         "Pour all ingredients into a cocktail shaker, mix and serve over ice into a chilled glass.",
-  //       image:
-  //         "https://www.thecocktaildb.com/images/media/drink/2x8thr1504816928.jpg",
-  //       alcoholic: true,
-  //     },
-  //   ],
-  //   favourites: ["A1", "Margarita", "Mojito"]
-  // }
-
-
 
   function createDrinkObject(newDrinkFormEl) {
     const drink = {
@@ -666,11 +627,9 @@ function newDrinkForm() {
       alcoholic: newDrinkFormEl.alcoholic.value,
       ingredients: newDrinkFormEl.ingredients.value,
       instructions: newDrinkFormEl.ingredients.value,
-      image: newDrinkFormEl.image.value
-      //   alt: newDrinkFormEl.name.value
-      // },
-    };
-    return drink;
+      image: newDrinkFormEl.image.value,
+    }
+    return drink
   }
 
   function createDrinkOnServer(drink) {
@@ -680,27 +639,26 @@ function newDrinkForm() {
     return fetch("http://localhost:3000/drinks", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(drink)
+      body: JSON.stringify(drink),
     }).then(function (response) {
-      return response.json();
-    });
+      return response.json()
+    })
   }
-
-
 
   newDrinkDivEl.append(newDrinkFormEl)
 
   return newDrinkDivEl
+}
 
 // CREATE ANOTHER JSON SERVER WITH THE CATEGORIES
 
 function getDataFromSever() {
   fetch("http://localhost:3000/drinks")
-    .then((response) => response.json())
-    .then((drinksdata) => {
-      state.drinks = drinksdata;
+    .then(response => response.json())
+    .then(drinksdata => {
+      state.drinks = drinksdata
       renderRightMenu()
       renderLeftMenu()
       renderTopSection()
