@@ -29,7 +29,7 @@ h3 {
 
 p {
   margin-top: 8px;
-  font-size: 0.7rem;
+  font-size: 1rem;
 }
 
 li {
@@ -49,22 +49,6 @@ input:active, textarea:active {
   border-color: white;
 }
 
-button {
-  border-radius: 20px;
-  background-color: var(--dark-pink);
-  color: var(--white);
-  padding: 3px 7px;
-
-}
-
-button:hover{
-  background-color: var(--pink);
-}
-
-button:active{
-  background-color: var(--dark-pink);
-}
-
 .all-file {
   background-color: var(--black);
   display: grid;
@@ -72,8 +56,6 @@ button:active{
     "header header header" 60px
     "left main right" 1fr /
     200px 1fr 200px;
-
-  /* gap: 10px; */
 }
 
 /* HEADER SECTION  */
@@ -119,7 +101,7 @@ button:active{
 .main-section {
   height: 100%;
   width: 100%;
-  background-color: var(--navy)
+  background-color: var(--navy);
   grid-area: main;
   padding: 20px;
 }
@@ -137,11 +119,14 @@ button:active{
 }
 
 .main-section .bottom-section {
+  height: 100%;
   display: grid;
   place-content: top;
 }
 
 .main-section .bottom-section .bottom-section-card {
+  display: grid;
+background-color: var(--black);
   border: solid 1px var(--dark-pink);
   padding: 30px;
   border-radius: 8px;
@@ -151,6 +136,10 @@ button:active{
   max-width: 100%;
   object-fit: cover;
   margin-top: 5px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
 }
 .favourite {
   width: 1rem;
@@ -161,15 +150,36 @@ button:active{
   padding: 8px;
   border-radius: 8px;
   text-align: center;
-  background-color: var(--black)  
+  background-color: var(--black);  
 }
 
-.list-cards .card:hover{
-
+.card li:hover{
   border-color: var(--pink);
 }
 
+.card button {
+  height: 33px;
+  width: 33px;
+  border-radius: 50%;
+  background-color: var(--dark-pink);
+  color: var(--white);
+  padding: 3px 7px;
+  margin-left: 10px;
+}
+
+.card button:hover{
+  background-color: var(--pink);
+}
+
+.card button:active{
+  background-color: var(--dark-pink);
+}
+
 /* SELECTED CARD AREA  */
+.bottom-section-card {
+  text-align: center;
+}
+
 .main-section .selected-card-image {
   height: 100px;
   width: 100px;
@@ -178,6 +188,31 @@ button:active{
 .main-section .ingredients-list {
   list-style: circle;
   list-style: none;
+}
+
+.selected-card-delete{
+  width: 50px;
+  height: 50px;
+}
+
+.selected-card-delete {
+  border-radius: 20px;
+  background-color: var(--dark-pink);
+  color: var(--white);
+  padding: 3px 7px;
+}
+
+.selected-card-delete:hover{
+  background-color: var(--pink);
+}
+
+.selected-card-delete:active{
+  background-color: var(--dark-pink);
+}
+
+.selected-drink-name{
+  font-size: 2rem;
+  margin: 10px 0;
 }
 
 /* RIGHT MENU */
@@ -196,7 +231,7 @@ button:active{
 }
 
 .favourites-list li {
-  background-color: rgb(214, 214, 214);
+  background-color: var(--blackest);
   border-radius: 20px;
   padding: 5px 8px;
   margin-top: 5px;
@@ -206,9 +241,27 @@ button:active{
 
 .favourites-list button {
   display: inline;
+  height: 33px;
+  width: 33px;
+  border-radius: 50%;
+  background-color: var(--dark-pink);
+  color: var(--white);
+  padding: 3px 7px;
+  margin-left: 10px;
 }
 
+.favourites-list  button:hover{
+  background-color: var(--pink);
+}
 
+.favourites-list  button:active{
+  background-color: var(--dark-pink);
+}
+
+.favourite {
+  background-color: rgba(0, 0, 0, 0);
+  border-color: rgba(0, 0, 0, 0);
+}
 
 .new-drink-form select {
   display: block;
@@ -226,3 +279,17 @@ button:active{
   margin-left: 10px;
 }
 
+.new-drink-form button {
+  border-radius: 20px;
+  background-color: var(--dark-pink);
+  color: var(--white);
+  padding: 3px 7px;
+}
+
+.new-drink-form button:hover{
+  background-color: var(--pink);
+}
+
+.new-drink-form button:active{
+  background-color: var(--dark-pink);
+}
